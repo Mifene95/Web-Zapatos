@@ -12,6 +12,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $titulo = $_POST['titulo_zapato'];
     
     // 3. Configurar carpeta
     $directorio = "uploads/";
@@ -32,9 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         
         try {
             // 5. Insertar usando el ID de la sesión
-            $sql = "INSERT INTO products (filename, user_id) VALUES (?, ?)";
+            $sql = "INSERT INTO products (titulo, filename, user_id) VALUES (?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$nombreArchivo, $_SESSION['user_id']]);
+            $stmt->execute([$titulo, $nombreArchivo, $_SESSION['user_id']]);    
             
             // REDIRECCIÓN DIRECTA: Sin mensajes ni esperas
             header("Location: pages/catalogo.php");

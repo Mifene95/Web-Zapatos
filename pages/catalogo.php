@@ -27,6 +27,9 @@ if (!isset($_SESSION['rol'])) {
             <h3>Subir nuevo zapato</h3>
             <p>Comparte una foto del producto:</p>
             <form action="../upload.php" method="POST" enctype="multipart/form-data">
+                <legend>Nombre del post</legend>
+                <input type="text" name="titulo_zapato" placeholder="Ej: Zapato de boda" required>
+
                 <input type="file" name="foto_zapato" required>
                 <button type="submit" class="btn-upload">Publicar Zapato</button>
             </form>
@@ -39,6 +42,8 @@ if (!isset($_SESSION['rol'])) {
             $stmt = $pdo->query("SELECT * FROM products ORDER BY id DESC");
             while ($row = $stmt->fetch()) {
                 echo "<div class='zapato-card'>";
+
+                echo "<h3>" . htmlspecialchars($row['titulo']) . "</h3>";
                     // Imagen del zapato
                     echo "<img src='../uploads/{$row['filename']}' alt='Zapato'>";
 
