@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    // Efecto Hover y Click (Ya lo tenías, añadimos el envío de datos)
+    // Efecto Hover y Click 
     $('.star').click(function(){
         var contenedor = $(this).parent();
         var puntos = $(this).data('v');
@@ -19,11 +19,21 @@ $(document).ready(function(){
     
     if(msg) {
         let btn = $(this);
-        // Usamos AJAX para guardar en segundo plano
+        let contenedorVotos = btn.closest('.contenedor-votos');
+
         $.post('../inc/guardar_voto.php', { id: idZapato, comentario: msg }, function(){
-            // En lugar de "Guardado", inyectamos el formato exacto de la BBDD
-            btn.after('<p style="font-size:12px; color:blue;">Reseña: ' + msg + '</p>');
-            btn.remove(); // Eliminamos el botón por completo para que quede igual que al cargar
+            // 1. Eliminamos el botón de comentar
+            btn.remove();
+
+            // 2. Creamos el HTML exacto que usa el CSS .resena-box
+            let htmlResena = `
+                <div class="resena-box">
+                    <p><strong>Reseña:</strong> ${msg}</p>
+                </div>
+            `;
+
+            // 3. Lo añadimos al final del contenedor de votos
+            contenedorVotos.append(htmlResena);
         });
     }
 });

@@ -34,3 +34,4 @@ if (isset($_GET['id'])) {
 header("Location: ../pages/catalogo.php");
 exit();
 ?>
+

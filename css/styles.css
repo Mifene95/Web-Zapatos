@@ -1,0 +1,161 @@
+/* Configuracion General - Estática */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    color: #333;
+}
+
+/* Header */
+header {
+    background: #222;
+    color: white;
+    padding: 15px 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Contenedor de la Galeria */
+.galeria {
+    display: flex;
+    gap: 20px;
+    flex-wrap: wrap;
+    padding: 20px;
+    justify-content: center;
+}
+
+/* Tarjeta de Zapato */
+.zapato-card {
+    padding: 15px;
+    background: white;
+    border-radius: 8px;
+    width: 240px;
+    text-align: center;
+}
+
+/* Imagen */
+.zapato-card img {
+    border-radius: 4px;
+    object-fit: cover;
+    margin-bottom: 10px;
+    width: 200px;
+    height: 200px;
+
+}
+
+/* Estrellas y Votos */
+.contenedor-votos {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px solid #eee;
+}
+
+.star {
+    cursor: pointer;
+    font-size: 26px;
+}
+
+/* Botones Planos */
+button, .btn-eliminar, .btn-logout, .btn-upload {
+    cursor: pointer;
+    padding: 8px 15px;
+    border-radius: 4px;
+    border: none;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.btn-comentar {
+    background: #007bff;
+    color: white;
+    margin-top: 10px;
+}
+
+.btn-eliminar {
+    background: #ff4d4d;
+    color: white;
+    font-size: 12px;
+}
+
+.btn-logout {
+    background: #555;
+    color: white;
+    font-size: 14px;
+}
+
+/* Reseñas  */
+.resena-box {
+    background: #f1f8ff;
+    padding: 8px;
+    border-radius: 4px;
+    margin-top: 10px;
+    font-size: 13px;
+    border-left: 4px solid #007bff;
+    text-align: left;
+}
+
+.resena-box p {
+    margin: 0;
+}
+
+.link-eliminar-resena {
+    color: red;
+    text-decoration: underline;
+    font-size: 11px;
+    display: block;
+    margin-top: 5px;
+}
+
+/* Seccion de subida plana */
+.upload-section {
+    background: #eee;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin: 20px;
+    border-radius: 8px;
+}
+
+.titulo{
+    text-align: center;
+}
+
+/* Pagina bienvenida */
+
+
+.login-container {
+    text-align: center;
+    background-color: #eee;
+    max-width: 750px;
+    margin: auto;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.login-container h2 {
+    font-size: 40px;
+}
+
+.inputs-form {
+    display: flex;
+    align-items: center;
+    justify-content: center; 
+    gap: 15px;
+    padding: 20px;
+}
+
+.login-container form input {
+    font-size: 20px;
+    padding: 5px;
+    margin-bottom: 0; 
+}
+
+.login-container button {
+    background-color: white;
+    font-size: 18px;
+    border-radius: 5px;
+    padding: 8px 15px; 
+    margin-left: auto; 
+    cursor: pointer;
+    border: 1px solid #ccc;
+}
