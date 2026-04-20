@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-require 'inc/db.php'; // Asegúrate de que este archivo existe en la carpeta inc
+require 'inc/db.php'; 
 
 // 2. Revisar si hay sesión
 if (!isset($_SESSION['user_id'])) {
@@ -22,6 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nombreArchivo = time() . "_" . basename($_FILES["foto_zapato"]["name"]);
     $rutaFinal = $directorio . $nombreArchivo;
 
+    //Validacion de imagenes
     $permitidos = ['image/jpeg', 'image/png', 'image/gif'];
     if (!in_array($_FILES['foto_zapato']['type'], $permitidos)) {
     die("Error: Solo se permiten imágenes JPG, PNG o GIF.");

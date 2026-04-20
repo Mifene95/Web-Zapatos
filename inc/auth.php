@@ -1,6 +1,6 @@
 <?php
 session_start();
-require 'db.php'; // Como están en la misma carpeta 'inc', no lleva ../
+require 'db.php';
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];

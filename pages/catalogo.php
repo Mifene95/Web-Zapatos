@@ -2,6 +2,7 @@
 session_start();
 require '../inc/db.php';
 
+//Comprueba si estas logeado
 if (!isset($_SESSION['rol'])) {
     header("Location: ../index.php");
     exit();
@@ -41,7 +42,7 @@ if (!isset($_SESSION['rol'])) {
                     // Imagen del zapato
                     echo "<img src='../uploads/{$row['filename']}' alt='Zapato'>";
 
-                    // BOTÓN ELIMINAR ZAPATO (Admin o dueño)
+                    // BOTÓN ELIMINAR ZAPATO 
                     if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador' || $_SESSION['user_id'] == $row['user_id']) {
                         echo "<div class='admin-actions'>";
                             echo "<a href='../inc/eliminar.php?id={$row['id']}' class='btn-eliminar' 
@@ -77,8 +78,8 @@ if (!isset($_SESSION['rol'])) {
                                     }
                                 echo "</div>";
                             } else {
-                                // Solo el user puede comentar si no hay reseña
-                                if ($_SESSION['rol'] === 'user') {
+                                
+                                if ($_SESSION['rol'] === 'user' || $_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador') {
                                     echo "<button class='btn-comentar'>Comentar</button>";
                                 }
                             }

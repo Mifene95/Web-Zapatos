@@ -15,7 +15,7 @@ if (isset($_GET['id'])) {
     $producto = $stmt->fetch();
 
     if ($producto) {
-        // REGLA DE ORO: Solo borra si es Admin O si es el dueño
+        // Solo borra si es Admin O si es el dueño
         if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador' || $_SESSION['user_id'] == $producto['user_id']) {
             
             $rutaImagen = "../uploads/" . $producto['filename'];
