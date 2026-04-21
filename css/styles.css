@@ -194,7 +194,18 @@ button, .btn-eliminar, .btn-logout, .btn-upload, .btn-editar {
 
 
 
+/* ESTADO NORMAL  */
+.texto-comentario {
+    user-select: none;     
+    color: #555;          
+}
 
 
-
-
+/*  HOVER EDITABLE */
+.texto-comentario.es-editable:hover {
+    background-color: #eef2ff; 
+    text-decoration: underline;
+    color: green;
+    cursor: pointer;
+    font-weight: bold;
+}

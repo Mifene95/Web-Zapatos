@@ -27,7 +27,7 @@ $(document).ready(function(){
             // 2. Creamos solo el HTML del comentario individual
             let nuevoComentario = `
                 <div class="comentario-individual" style="border-bottom: 1px solid #eee; margin-bottom: 5px;">
-                <button class="btn-borrar-comentario" data-id="${response.trim()}"> x </button>
+                <button class="btn-borrar-comentario" data-id="${response.trim()}"> 🗑️ </button>
                     <strong>${user}:</strong> 
                     <span>${msg}</span>
                 </div>

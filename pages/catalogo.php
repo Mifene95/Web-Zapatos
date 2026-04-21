@@ -55,7 +55,7 @@ if (!isset($_SESSION['rol'])) {
                 if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador') {
                     // El Admin ve ambos botones
                     echo "<a href='editar_zapato.php?id={$row['id']}' class='btn-editar'>✏️ Editar</a>";
-                    echo "<a href='../inc/eliminar.php?id={$row['id']}' class='btn-eliminar' 
+                    echo "<a href='../inc/eliminar.php?id={$row['id']}'class='btn-eliminar' 
                                 onclick='return confirm(\"¿Estás seguro de eliminar este zapato?\")'>🗑️ Eliminar</a>";
                 } elseif ($_SESSION['user_id'] == $row['user_id']) {
                     // El usuario normal solo ve eliminar si es suyo
