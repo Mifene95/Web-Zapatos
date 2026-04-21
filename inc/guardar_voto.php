@@ -23,6 +23,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
 
         $stmt = $pdo->prepare($sql);
         $stmt->execute([$id_zapato, $id_usuario, $nombre, $texto]);
+
+        //Actualizar el boton para borrar sin recargar
+        $id_nuevo = $pdo->lastInsertId();
+        echo $id_nuevo;
         exit;
     }
 

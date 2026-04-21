@@ -27,6 +27,7 @@ $(document).ready(function(){
             // 2. Creamos solo el HTML del comentario individual
             let nuevoComentario = `
                 <div class="comentario-individual" style="border-bottom: 1px solid #eee; margin-bottom: 5px;">
+                <button class="btn-borrar-comentario" data-id="${response.trim()}"> x </button>
                     <strong>${user}:</strong> 
                     <span>${msg}</span>
                 </div>
@@ -45,7 +46,7 @@ $(document).ready(function(){
     }
 });
 
-    $('.btn-borrar-comentario').click(function(){
+    $(document).on('click', '.btn-borrar-comentario', function(){
     let boton = $(this);
     let id_comentario = boton.data("id");
     let caja_comentario = boton.closest('.comentario-individual');
