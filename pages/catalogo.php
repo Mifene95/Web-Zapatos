@@ -89,11 +89,16 @@ if (!isset($_SESSION['rol'])) {
                         //Comprobamos si es admin o dueño para mostrar boton borrar
                         $esAdmin = ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador');
                         $esDueño = ($_SESSION['user_id'] == $com['id_usuario']);
+
                         if ($esAdmin || $esDueño) {
-                            echo "<button class='btn-borrar-comentario' data-id='{$com['id']}'> x </button>";
+                            echo "<button class='btn-borrar-comentario' data-id='{$com['id']}'> 🗑️ </button>";
                         }
                         echo "<strong>" . htmlspecialchars($com['nombre_usuario']) . ":</strong> ";
-                        echo "<span>" . htmlspecialchars($com['comentario_texto']) . "</span>";
+                        echo "<span class='texto-comentario' data-id='{$com['id']}'>" . htmlspecialchars($com['comentario_texto']) . "</span>";
+
+                        if ($esAdmin) {
+                            echo "<button class = 'btn-editar-comentario' data-id={$com['id']}> ✏️ </button>";
+                        };
                         echo "</div>";
                     }
                 } else {

@@ -68,7 +68,26 @@ $(document).ready(function(){
 });
 
 
+$(document).on('click', '.btn-editar-comentario', function(){
+    let boton = $(this);
+    let id_comentario = boton.data('id');
+    let spanTexto = $(`.texto-comentario[data-id='${id_comentario}']`);
+    let textoActual = spanTexto.text();
+    
+    let nuevoTexto = prompt("Edita el comentario:", textoActual);
 
-
+    if (nuevoTexto !== null && nuevoTexto.trim() !== "" && nuevoTexto !== textoActual){
+        $.post('../inc/editar_comentario.php', {
+            id: id_comentario,
+            texto: nuevoTexto
+        }, function(respuesta){
+            if(respuesta.trim() === "editado_ok"){
+                spanTexto.text(nuevoTexto); 
+            } else {
+                alert("Error desde el servidor: " + respuesta);
+            }
+        }); 
+    } 
+}); 
 
 });
