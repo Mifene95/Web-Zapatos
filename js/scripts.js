@@ -16,26 +16,33 @@ $(document).ready(function(){
     $('.btn-comentar').click(function(){
     let idZapato = $(this).closest('.contenedor-votos').data('id');
     let user = $(this).data('user-name');
-    console.log(user);
     let msg = prompt("Escribe tu comentario:");
     
     if(msg) {
         let btn = $(this);
         let contenedorVotos = btn.closest('.contenedor-votos');
 
-        $.post('../inc/guardar_voto.php', { id: idZapato, comentario: msg }, function(){
-            // 1. Eliminamos el botón de comentar
-            btn.remove();
+        $.post('../inc/guardar_voto.php', { id: idZapato, comentario: msg }, function(response){
+            // 1. YA NO BORRAMOS EL BOTÓN (btn.remove() eliminado)
+            // Así el usuario puede comentar varias veces o diferentes usuarios pueden hacerlo.
 
-            // 2. Creamos el HTML exacto que usa el CSS .resena-box
-            let htmlResena = `
-                <div class="resena-box">
-                    <p><strong>Reseña de ${user}: </strong> ${msg}</p>
+            // 2. Creamos solo el HTML del comentario individual
+            let nuevoComentario = `
+                <div class="comentario-individual" style="border-bottom: 1px solid #eee; margin-bottom: 5px;">
+                    <strong>${user}:</strong> 
+                    <span>${msg}</span>
                 </div>
             `;
 
-            // 3. Lo añadimos al final del contenedor de votos
-            contenedorVotos.append(htmlResena);
+            // 3. Buscamos el div .resena-box que YA EXISTE en el PHP y le añadimos el nuevo comentario
+            let cajaResena = contenedorVotos.find('.resena-box');
+            
+            // Si la caja está vacía (decía "Sin comentarios aún"), quitamos ese texto antes
+            if(cajaResena.find('p').length > 0 && cajaResena.text().includes("Sin comentarios")){
+                cajaResena.empty();
+            }
+
+            cajaResena.append(nuevoComentario);
         });
     }
 });

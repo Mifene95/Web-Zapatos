@@ -67,7 +67,7 @@ if (!isset($_SESSION['rol'])) {
                 // 4. Sección de Votos y Reseñas
                 echo "<div class='contenedor-votos' data-id='{$row['id']}'>";
 
-                // Estrellas
+                // ESTRELLAS
                 echo "<div class='estrellas'>";
                 for ($i = 1; $i <= 5; $i++) {
                     $color = ($i <= $row['estrellas']) ? 'gold' : '#ccc';
@@ -75,20 +75,27 @@ if (!isset($_SESSION['rol'])) {
                 }
                 echo "</div>";
 
-                // Reseña
-                if (!empty($row['comentario_texto'])) {
-                    echo "<div class='resena-box'>";
-                    echo "<p><strong>Reseña:</strong> " . htmlspecialchars($row['comentario_texto']) . "</p>";
+                // RESEÑAS
+                echo "<div class='resena-box' style='background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px;'>";
 
-                    if ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador') {
-                        echo "<a href='../inc/eliminar_comentario.php?id={$row['id']}' class='link-eliminar-resena'>[Eliminar Reseña]</a>";
+                $stmt_com = $pdo->prepare("SELECT * FROM comentarios WHERE id_zapato = ? ORDER BY fecha DESC");
+                $stmt_com->execute([$row['id']]);
+                $comentarios = $stmt_com->fetchAll();
+
+                if (count($comentarios) > 0) {
+                    foreach ($comentarios as $com) {
+                        echo "<div class='comentario-individual' style='border-bottom: 1px solid #eee; margin-bottom: 5px;'>";
+                        echo "<strong>" . htmlspecialchars($com['nombre_usuario']) . ":</strong> ";
+                        echo "<span>" . htmlspecialchars($com['comentario_texto']) . "</span>";
+                        echo "</div>";
                     }
-                    echo "</div>";
                 } else {
-                    echo "<button class='btn-comentar' data-user-name='{$_SESSION['nombre']}'>Comentar</button>";
+                    echo "<p class='sin-comentarios' style='color: gray;'>Sin comentarios aún.</p>";
                 }
                 echo "</div>";
 
+                echo "<button class='btn-comentar' data-user-name='{$_SESSION['nombre']}' style='margin-top:10px;'>Añadir comentario</button>";
+                echo "</div>";
                 echo "</div>";
             }
             ?>
