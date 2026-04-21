@@ -68,7 +68,7 @@ $(document).ready(function(){
 });
 
 
-$(document).on('click', '.btn-editar-comentario', function(){
+$(document).on('click', '.texto-comentario.es-editable', function() {
     let boton = $(this);
     let id_comentario = boton.data('id');
     let spanTexto = $(`.texto-comentario[data-id='${id_comentario}']`);
