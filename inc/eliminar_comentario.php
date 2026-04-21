@@ -9,13 +9,8 @@ if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    
-    // Ponemos el comentario a NULL para "borrarlo" sin borrar el producto
-    $stmt = $pdo->prepare("UPDATE products SET comentario_texto = NULL WHERE id = ?");
+    $stmt = $pdo->prepare("DELETE FROM comentarios WHERE id = ?");
     $stmt->execute([$id]);
 }
-
-// Volvemos al catálogo
-header("Location: ../pages/catalogo.php");
+echo "borrado_ok";
 exit();
-?>

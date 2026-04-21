@@ -23,8 +23,6 @@ $(document).ready(function(){
         let contenedorVotos = btn.closest('.contenedor-votos');
 
         $.post('../inc/guardar_voto.php', { id: idZapato, comentario: msg }, function(response){
-            // 1. YA NO BORRAMOS EL BOTÓN (btn.remove() eliminado)
-            // Así el usuario puede comentar varias veces o diferentes usuarios pueden hacerlo.
 
             // 2. Creamos solo el HTML del comentario individual
             let nuevoComentario = `
@@ -37,7 +35,7 @@ $(document).ready(function(){
             // 3. Buscamos el div .resena-box que YA EXISTE en el PHP y le añadimos el nuevo comentario
             let cajaResena = contenedorVotos.find('.resena-box');
             
-            // Si la caja está vacía (decía "Sin comentarios aún"), quitamos ese texto antes
+            // Mostrar sin comentarios si esta vacia la caja
             if(cajaResena.find('p').length > 0 && cajaResena.text().includes("Sin comentarios")){
                 cajaResena.empty();
             }
@@ -46,4 +44,29 @@ $(document).ready(function(){
         });
     }
 });
+
+    $('.btn-borrar-comentario').click(function(){
+    let boton = $(this);
+    let id_comentario = boton.data("id");
+    let caja_comentario = boton.closest('.comentario-individual');
+    
+    if(confirm("¿Seguro que quieres borrar el comentario?")){
+        $.get('../inc/eliminar_comentario.php', { id: id_comentario }, function(respuesta){
+            console.log("Respuesta exacta del PHP: '" + respuesta + "'");
+            
+            if(respuesta.trim() === "borrado_ok"){
+                caja_comentario.fadeOut(400, function(){
+                    $(this).remove();
+                });
+            } else {
+                alert("No se pudo borrar: " + respuesta);
+            }
+        }); 
+    }
+});
+
+
+
+
+
 });
