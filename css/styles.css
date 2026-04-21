@@ -1,236 +1,383 @@
-/* Configuracion General - Estática */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
+* {
     margin: 0;
-    color: #333;
+    padding: 0;
+    box-sizing: border-box;
 }
 
-/* Header */
+:root {
+    --color-primario: #6c5ce7;
+    --color-secundario: #00cec9;
+    --color-fondo: #f1f2f6;
+    --color-texto: #2d3436;
+    --color-card: #ffffff;
+}
+
+/* BODY GENERAL */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(120deg, #f1f2f6, #dfe6e9);
+    color: var(--color-texto);
+}
+
+/* LOGIN BODY */
+body.login-page {
+    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* HEADER */
 header {
-    background: #222;
+    background: linear-gradient(90deg, var(--color-primario), var(--color-secundario));
     color: white;
-    padding: 15px 30px;
+    padding: 20px 40px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-/* Contenedor de la Galeria */
-.galeria {
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    padding: 20px;
-    justify-content: center;
-}
-
-/* Tarjeta de Zapato */
-.zapato-card {
-    padding: 20px; 
-    background: white;
-    border-radius: 12px; 
-    width: 320px; 
-    text-align: center;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.05); 
-}
-
-/* Imagen */
-.zapato-card img {
-    border-radius: 8px;
-    object-fit: cover;
-    margin-bottom: 15px;
-    width: 90%; 
-    height: 250px; 
-    padding: 20px;
-}
-
-/* Estrellas y Votos */
-.contenedor-votos {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid #eee;
-}
-
-.star {
-    cursor: pointer;
-    font-size: 26px;
-}
-
-/* Botones */
-button, .btn-eliminar, .btn-logout, .btn-upload, .btn-editar {
-    cursor: pointer;
+.btn-logout {
+    background: rgba(255,255,255,0.2);
     padding: 8px 15px;
-    border-radius: 4px;
-    border: none;
+    border-radius: 20px;
+    color: white;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.btn-logout:hover {
+    background: rgba(255,255,255,0.4);
+}
+
+/* CONTENEDOR */
+.container {
+    max-width: 1200px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+/* TITULO */
+.titulo {
+    font-size: 30px;
     font-weight: bold;
+    margin-bottom: 25px;
+}
+
+/* SUBIR */
+.upload-section {
+    background: var(--color-card);
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 40px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+}
+
+.upload-section input {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+}
+
+/* BOTON */
+.btn-upload {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(135deg, var(--color-primario), var(--color-secundario));
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.btn-upload:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+.btn-borrar-comentario {
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+}
+
+/* GRID */
+.galeria {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+/* CARD */
+.zapato-card {
+    background: var(--color-card);
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+    transition: all 0.3s ease;
+}
+
+.zapato-card:hover {
+    transform: translateY(-8px) scale(1.02);
+}
+
+.zapato-card img {
+    width: 100%;
+    height: 240px;
+    object-fit: cover;
+}
+
+/* TITULO */
+.zapato-titulo {
+    padding: 15px;
+    font-size: 17px;
+    font-weight: 600;
+}
+
+/* BOTONES */
+.admin-actions {
+    display: flex;
+    gap: 10px;
+    padding: 0 15px 10px;
+    justify-content: center;
+    margin-top: 10px;
+}
+
+.btn-editar {
+    background: #0984e3;
+    color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
     text-decoration: none;
 }
 
-.btn-comentar {
-    background: #007bff;
-    color: white;
-    margin-top: 10px;
-}
-
 .btn-eliminar {
-    background: #ff4d4d;
+    background: #d63031;
     color: white;
+    padding: 6px 10px;
+    border-radius: 6px;
+    text-decoration: none;
 }
 
-.btn-editar{
-    background: green;
-    color: white;
-    margin-bottom: 10px;
-}
-.btn-logout {
-    background: #555;
-    color: white;
-    font-size: 14px;
+/* ESTRELLAS */
+.estrellas {
+    padding: 0 15px 10px;
 }
 
-/* Reseñas  */
+.star {
+    font-size: 20px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.star:hover {
+    color: gold;
+}
+
+/* COMENTARIOS */
 .resena-box {
-    background: #f1f8ff;
-    padding: 8px;
-    border-radius: 4px;
-    margin-top: 10px;
+    padding: 10px 15px;
     font-size: 13px;
-    border-left: 4px solid #007bff;
-    text-align: left;
+    border-top: 1px solid #eee;
 }
 
-.resena-box p {
-    margin: 0;
+.comentario-individual {
+    margin-bottom: 5px;
 }
 
-.comentario-individual{
-    font-size: 16px;
-}
-
-.link-eliminar-resena {
-    color: red;
-    text-decoration: underline;
-    font-size: 11px;
-    display: block;
-    margin-top: 5px;
-}
-
-/* Seccion de subida */
-.upload-section {
-    background: #eee;
-    border: 1px solid #ccc;
-    padding: 20px;
-    margin: 20px;
-    border-radius: 8px;
-}
-
-.titulo{
-    text-align: center;
-}
-
-/* Pagina bienvenida */
-
-
-.login-container {
-    text-align: center;
-    background-color: #eee;
-    max-width: 750px;
-    margin: auto;
+/* BOTON COMENTAR */
+.btn-comentar {
+    width: 100%;
     padding: 10px;
+    border: none;
+    background: linear-gradient(135deg, #a29bfe, #74b9ff);
+    color: white;
+    cursor: pointer;
+}
+
+.btn-comentar:hover {
+    opacity: 0.9;
+}
+
+/* LOGIN */
+.login-container {
+    width: 480px;
+    padding: 50px 40px;
+    margin: 100px auto;
     border-radius: 20px;
-    margin-top: 15%;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+    text-align: center;
 }
 
 .login-container h2 {
-    font-size: 40px;
+    font-size: 28px;
+    margin-bottom: 30px;
+    color: #2d3436;
 }
 
-.inputs-form {
-    display: flex;
-    align-items: center;
-    justify-content: center; 
-    gap: 15px;
-    padding: 20px;
+.login-container input {
+    width: 100%;
+    padding: 14px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    font-size: 14px;
+    transition: 0.3s;
 }
 
-.login-container form input {
-    font-size: 20px;
-    padding: 5px;
-    margin-bottom: 0; 
+.login-container input:focus {
+    outline: none;
+    border-color: #6c5ce7;
+    box-shadow: 0 0 10px rgba(108,92,231,0.2);
 }
 
 .login-container button {
-    background-color: white;
-    font-size: 18px;
-    border-radius: 5px;
-    padding: 8px 15px; 
-    margin-left: auto; 
-    cursor: pointer;
-    border: 1px solid #ccc;
-}
-
-
-/* Botones admin */
-.admin-actions{
-    display: flex;
-    flex-direction: column;
-}
-
-.btn-borrar-comentario{
-    background-color: #ff4d4d;
-    margin-right: 5px;
-}
-
-.btn-editar-comentario{
-    background-color: green;
-}
-
-.btn-borrar-comentario, .btn-editar-comentario {
-    font-size: 10px;
-    border-radius: 3px;
-    margin-right: 15px;
-}
-
-
-
-/* ESTADO NORMAL  */
-.texto-comentario {
-    user-select: none;     
-    color: #555;          
-}
-
-
-/*  HOVER EDITABLE */
-.texto-comentario.es-editable:hover {
-    background-color: #eef2ff; 
-    text-decoration: underline;
-    color: green;
-    cursor: pointer;
+    width: 100%;
+    padding: 14px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    color: white;
+    font-size: 15px;
     font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.editar-admin label{
-    font-size: 30px;
+.login-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
 }
 
-.img-titulo{
-    font-size: 30px;
+/* EDITAR */
+.editar-admin {
+    width: 500px;
+    margin: 50px auto;
+    padding: 30px;
+    background: white;
+    border-radius: 15px;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.1);
 }
 
-.editar-admin{
-    background-color: #eee;
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .login-container,
+    .editar-admin {
+        width: 90%;
+    }
+}
+
+
+/* FONDO DE LA PÁGINA (sin tocar HTML) */
+body:has(.editar-admin) {
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+}
+
+/* FORMULARIO (TU MISMO HTML) */
+.editar-admin {
+    width: 550px;
+    padding: 40px;
+
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+
+    border-radius: 20px;
+    box-shadow: 0 25px 60px rgba(0,0,0,0.25);
+
     text-align: center;
-    font-size: large;
 }
 
-.editar-admin input{
-    text-align: center;
-    max-width: 300px;
-    font-size: 20px;
+/* INPUTS INLINE (los que tienes en style="") */
+.editar-admin input[type="text"],
+.editar-admin input[type="file"] {
+    width: 100%;
+    padding: 12px;
+
+    margin-top: 8px;
+    margin-bottom: 20px;
+
+    border: 1px solid #ddd;
+    border-radius: 10px;
+
+    font-size: 14px;
 }
 
-.aviso{
-    font-size: 20px;
-    color: gray;
+/* IMAGEN ACTUAL (sobrescribe inline) */
+.editar-admin img {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+
+    border-radius: 12px;
+    border: 2px solid #6c5ce7;
+
+    margin: 10px 0 20px 0;
+}
+
+/* LABELS */
+.editar-admin label {
+    display: block;
+    text-align: left;
+    font-weight: 500;
+}
+
+/* TEXTO AYUDA */
+.aviso {
+    font-size: 12px;
+    color: #666;
+    margin-top: 5px;
+}
+
+/* BOTON GUARDAR (sobrescribe inline style) */
+.editar-admin button {
+    width: 100%;
+    padding: 14px;
+
+    border: none;
+    border-radius: 12px;
+
+    background: linear-gradient(135deg, #6c5ce7, #00cec9);
+    color: white;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    transition: 0.3s;
+}
+
+.editar-admin button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+}
+
+/* CANCELAR LINK */
+.editar-admin a {
+    display: inline-block;
+    margin-top: 15px;
+
+    padding: 8px 15px;
+    border-radius: 10px;
+
+    background: #d63031;
+    color: white;
+    text-decoration: none;
+
+    transition: 0.3s;
+}
+
+.editar-admin a:hover {
+    opacity: 0.8;
 }
