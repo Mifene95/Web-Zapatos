@@ -52,6 +52,7 @@ $(document).ready(function(){
     
     if(confirm("¿Seguro que quieres borrar el comentario?")){
         $.get('../inc/eliminar_comentario.php', { id: id_comentario }, function(respuesta){
+            console.log("Intentando borrar comentario con ID:", id_comentario);
             console.log("Respuesta exacta del PHP: '" + respuesta + "'");
             
             if(respuesta.trim() === "borrado_ok"){

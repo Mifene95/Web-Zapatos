@@ -2,15 +2,38 @@
 session_start();
 require 'db.php';
 
-// Verificamos que quien entra sea un rol con permisos
-if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'administrador')) {
-    die("No tienes permiso para borrar comentarios.");
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
+// 1. Verificación
+if (!isset($_SESSION['rol']) || !isset($_SESSION['user_id'])) {
+    echo "error_sesion";
+    exit;
 }
 
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $stmt = $pdo->prepare("DELETE FROM comentarios WHERE id = ?");
+
+    // 2. Buscamos dueño
+    $stmt = $pdo->prepare("SELECT id_usuario FROM comentarios WHERE id = ?");
     $stmt->execute([$id]);
+    $comentario = $stmt->fetch(); // Usamos fetch para un solo registro
+
+    if ($comentario) {
+        // 3. Comprobar permisos
+        $esAdmin = ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador');
+        $esDueño = ($_SESSION['user_id'] == $comentario['id_usuario']);
+
+        if ($esAdmin || $esDueño) {
+            $delete = $pdo->prepare("DELETE FROM comentarios WHERE id = ?");
+            $delete->execute([$id]);
+            echo "borrado_ok";
+        } else {
+            echo "error_permiso"; // No eres el dueño ni admin
+        }
+    } else {
+        echo "error_no_existe";
+    }
 }
-echo "borrado_ok";
 exit();
