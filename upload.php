@@ -4,7 +4,7 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 session_start();
-require 'inc/db.php'; 
+require 'inc/db.php';
 
 // 2. Revisar si hay sesión
 if (!isset($_SESSION['user_id'])) {
@@ -13,7 +13,7 @@ if (!isset($_SESSION['user_id'])) {
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $titulo = $_POST['titulo_zapato'];
-    
+
     // 3. Configurar carpeta
     $directorio = "uploads/";
     if (!is_dir($directorio)) {
@@ -26,27 +26,24 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     //Validacion de imagenes
     $permitidos = ['image/jpeg', 'image/png', 'image/gif'];
     if (!in_array($_FILES['foto_zapato']['type'], $permitidos)) {
-    die("Error: Solo se permiten imágenes JPG, PNG o GIF.");
-}
+        die("Error: Solo se permiten imágenes JPG, PNG o GIF.");
+    }
     // 4. Subir archivo
     if (move_uploaded_file($_FILES["foto_zapato"]["tmp_name"], $rutaFinal)) {
-        
+
         try {
             // 5. Insertar usando el ID de la sesión
             $sql = "INSERT INTO products (titulo, filename, user_id) VALUES (?, ?, ?)";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$titulo, $nombreArchivo, $_SESSION['user_id']]);    
-            
-            // REDIRECCIÓN DIRECTA: Sin mensajes ni esperas
+            $stmt->execute([$titulo, $nombreArchivo, $_SESSION['user_id']]);
+
+            // REDIRECCIÓN DIRECTA:
             header("Location: pages/catalogo.php");
             exit();
-
         } catch (PDOException $e) {
             die("Error de Base de Datos: " . $e->getMessage());
         }
-        
     } else {
         die("Error: No se pudo mover el archivo a /uploads. Revisa permisos de carpeta.");
     }
 }
-?>

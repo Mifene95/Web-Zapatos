@@ -1,5 +1,5 @@
 $(document).ready(function(){
-    // Efecto Hover y Click 
+    // Pintar estrellas
     $('.star').click(function(){
         var contenedor = $(this).parent();
         var puntos = $(this).data('v');
@@ -15,6 +15,8 @@ $(document).ready(function(){
 
     $('.btn-comentar').click(function(){
     let idZapato = $(this).closest('.contenedor-votos').data('id');
+    let user = $(this).data('user-name');
+    console.log(user);
     let msg = prompt("Escribe tu comentario:");
     
     if(msg) {
@@ -28,7 +30,7 @@ $(document).ready(function(){
             // 2. Creamos el HTML exacto que usa el CSS .resena-box
             let htmlResena = `
                 <div class="resena-box">
-                    <p><strong>Reseña:</strong> ${msg}</p>
+                    <p><strong>Reseña de ${user}: </strong> ${msg}</p>
                 </div>
             `;
 

@@ -2,17 +2,37 @@
 session_start();
 require 'db.php';
 
+
+// Verificamos que el usuario esté logueado 
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
-    $id_zapato = $_POST['id'];
-    
-    if (isset($_POST['comentario'])) {
-        $msg = $_POST['comentario'];
-        $stmt = $pdo->prepare("UPDATE products SET comentario_texto = ? WHERE id = ?");
-        $stmt->execute([$msg, $id_zapato]);
-    } else {
+
+    $id_zapato = $_POST['id'] ?? null;
+    $id_usuario = $_SESSION['user_id'];
+    $nombre = $_SESSION['nombre'];
+
+    if (!$id_zapato) {
+        die("Error: ID de zapato no recibido");
+    }
+
+    if (isset($_POST['comentario']) && !empty($_POST['comentario'])) {
+        $texto = $_POST['comentario'];
+
+        // INSERT
+        $sql = "INSERT INTO comentarios (id_zapato, id_usuario, nombre_usuario, comentario_texto) 
+                VALUES (?, ?, ?, ?)";
+
+        $stmt = $pdo->prepare($sql);
+        $stmt->execute([$id_zapato, $id_usuario, $nombre, $texto]);
+        exit;
+    }
+
+    // BLOQUE PARA PUNTOS (ESTRELLAS)
+    if (isset($_POST['puntos'])) {
         $puntos = $_POST['puntos'];
         $stmt = $pdo->prepare("UPDATE products SET estrellas = ? WHERE id = ?");
         $stmt->execute([$puntos, $id_zapato]);
+        exit;
     }
-    echo "OK";
+} else {
+    echo "ERROR: Sesión no iniciada o acceso denegado";
 }
