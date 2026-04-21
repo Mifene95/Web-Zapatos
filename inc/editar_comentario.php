@@ -2,7 +2,7 @@
 session_start();
 require 'db.php';
 
-// 1. Verificación básica: ¿Está logueado?
+//  ¿Está logueado?
 if (!isset($_SESSION['user_id'])) {
     die("Debes iniciar sesión");
 }
@@ -15,7 +15,7 @@ if (isset($_POST["id"]) && isset($_POST["texto"])) {
 
     if (!empty($nuevoTexto)) {
         try {
-            // 2. Buscamos el comentario para saber quién lo escribió
+            //  Buscamos el comentario 
             $stmtCheck = $pdo->prepare("SELECT id_usuario FROM comentarios WHERE id = ?");
             $stmtCheck->execute([$id]);
             $comentario = $stmtCheck->fetch();
@@ -24,12 +24,12 @@ if (isset($_POST["id"]) && isset($_POST["texto"])) {
                 die("Comentario no encontrado");
             }
 
-            // 3. LA CLAVE: ¿Es admin O es el dueño?
+            // ¿Es admin O es el dueño?
             $esAdmin = ($rol_sesion === "admin" || $rol_sesion === "administrador");
             $esDuenio = ($comentario['id_usuario'] == $user_id_sesion);
 
             if ($esAdmin || $esDuenio) {
-                // 4. Procedemos a actualizar
+
                 $sql = 'UPDATE comentarios SET comentario_texto = ? WHERE id = ?';
                 $stmt = $pdo->prepare($sql);
                 $stmt->execute([$nuevoTexto, $id]);
