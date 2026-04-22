@@ -90,4 +90,67 @@ $(document).on('click', '.texto-comentario.es-editable', function() {
     } 
 }); 
 
+    //Boton dropdwon
+$(document).ready(function(){
+    $('#user-name-click').click(function(e){
+        e.stopPropagation(); 
+        $('#dropdown-menu').toggleClass('show-menu');
+    });
+
+    $(document).click(function(){
+        $('#dropdown-menu').removeClass('show-menu');
+    });
+});
+
+var tipoEdicion = ""; 
+
+// Abrir Modal al clicar en opciones del dropdown
+$('.btn-perfil').click(function(e){
+    e.preventDefault();
+    //Tipo de modal
+    tipoEdicion = $(this).data('tipo'); 
+    let titulo = $(this).text();
+    
+    $('#modal-titulo').text(titulo);
+    // Si es password, cambiamos el tipo de input
+    $('#input-modal').attr('type', tipoEdicion === 'email' ? 'email' : (tipoEdicion === 'pass' ? 'password' : 'text'));
+    $('#modalPerfil').fadeIn(200);
+});
+
+// Cerrar Modal
+$('#btn-cerrar-modal').click(function(){
+    $('#modalPerfil').fadeOut(200);
+});
+
+// Enviar cambio a la Base de Datos
+$('#btn-guardar-perfil').click(function(){
+    let nuevoValor = $('#input-modal').val();
+
+    if(nuevoValor.trim() === ""){
+        alert("El campo no puede estar vacío");
+        return;
+    }
+    
+    //Validacion de email
+    if(tipoEdicion === 'email'){
+        let regexEmail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if(!regexEmail.test(nuevoValor)){
+            alert("Por favor, introduce un correo electrónico válido");
+            return;
+        }
+    }
+
+    $.post('../inc/actualizar_perfil.php', {
+        tipo: tipoEdicion,
+        valor: nuevoValor
+    }, function(respuesta){
+        if(respuesta.trim() === "ok"){
+            alert("¡Actualizado con éxito!");
+            location.reload(); // Recargamos para ver los cambios (como el nombre en el header)
+        } else {
+            alert("Error: " + respuesta);
+        }
+    });
+});
+
 });

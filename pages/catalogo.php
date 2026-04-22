@@ -3,6 +3,7 @@ session_start();
 require '../inc/db.php';
 
 // Comprueba si estás logueado
+
 if (!isset($_SESSION['rol'])) {
     header("Location: ../index.php");
     exit();
@@ -17,11 +18,40 @@ if (!isset($_SESSION['rol'])) {
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
+<div id="modalPerfil" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="modal-titulo">Editar Perfil</h3>
+        <div class="modal-body">
+            <p class="modal-label">Introduce el nuevo dato:</p>
+            <input type="text" id="input-modal" class="modal-input" placeholder="Escribe aquí...">
+        </div>
+        <div class="modal-footer">
+            <button id="btn-cerrar-modal" class="btn-secundario">Cancelar</button>
+            <button id="btn-guardar-perfil" class="btn-primario">Guardar Cambios</button>
+        </div>
+    </div>
+</div>
 
 <body>
     <header>
-        <span class="span-bienvenida">Bienvenido, <strong><?php echo htmlspecialchars($_SESSION['nombre']); ?></strong></span>
+        <span class="span-bienvenida">
+            Bienvenido,
+            <div class="user-dropdown" style="display: inline-block; position: relative;">
+                <strong id="user-name-click" style="cursor: pointer; text-decoration: underline;">
+                    <?php echo htmlspecialchars($_SESSION['nombre']); ?> ▼
+                </strong>
+                <div id="dropdown-menu" class="dropdown-content">
+                    <a href="#" class="btn-perfil" data-tipo="nombre">Cambiar Nombre Usuario</a>
+                    <a href="#" class="btn-perfil" data-tipo="email">Cambiar Correo</a>
+                    <a href="#" class="btn-perfil" data-tipo="pass">Cambiar Password</a>
+                </div>
+            </div>
+        </span>
         <a href="../inc/logout.php" class="btn-logout">Cerrar Sesión</a>
+    </header>
+
+
+
     </header>
 
     <div class="container">
