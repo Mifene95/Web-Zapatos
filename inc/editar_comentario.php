@@ -2,7 +2,7 @@
 session_start();
 require 'db.php';
 
-//  ¿Está logueado?
+// Comprobar si isSet
 if (!isset($_SESSION['user_id'])) {
     die("Debes iniciar sesión");
 }
@@ -15,7 +15,7 @@ if (isset($_POST["id"]) && isset($_POST["texto"])) {
 
     if (!empty($nuevoTexto)) {
         try {
-            //  Buscamos el comentario 
+            // Buscar comentario
             $stmtCheck = $pdo->prepare("SELECT id_usuario FROM comentarios WHERE id = ?");
             $stmtCheck->execute([$id]);
             $comentario = $stmtCheck->fetch();
@@ -24,7 +24,7 @@ if (isset($_POST["id"]) && isset($_POST["texto"])) {
                 die("Comentario no encontrado");
             }
 
-            // ¿Es admin O es el dueño?
+            //Comprobamos si es admin o owner del comentario
             $esAdmin = ($rol_sesion === "admin" || $rol_sesion === "administrador");
             $esDuenio = ($comentario['id_usuario'] == $user_id_sesion);
 

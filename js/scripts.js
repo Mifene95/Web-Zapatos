@@ -9,10 +9,11 @@ $(document).ready(function(){
         $(this).css('color', 'gold').prevAll().css('color', 'gold');
         $(this).nextAll().css('color', '#ccc');
 
-        // ENVIAR A LA BASE DE DATOS
+        
         $.post('../inc/guardar_voto.php', { id: idZapato, puntos: puntos });
     });
 
+    //Boton comentar
     $('.btn-comentar').click(function(){
     let idZapato = $(this).closest('.contenedor-votos').data('id');
     let user = $(this).data('user-name');
@@ -24,7 +25,6 @@ $(document).ready(function(){
 
         $.post('../inc/guardar_voto.php', { id: idZapato, comentario: msg }, function(response){
 
-            // 2. Creamos solo el HTML del comentario individual
             let nuevoComentario = `
                 <div class="comentario-individual" style="border-bottom: 1px solid #eee; margin-bottom: 5px;">
                 <button class="btn-borrar-comentario" data-id="${response.trim()}"> 🗑️ </button>
@@ -33,7 +33,6 @@ $(document).ready(function(){
                 </div>
             `;
 
-            // 3. Buscamos el div .resena-box que YA EXISTE en el PHP y le añadimos el nuevo comentario
             let cajaResena = contenedorVotos.find('.resena-box');
             
             // Mostrar sin comentarios si esta vacia la caja
@@ -41,11 +40,12 @@ $(document).ready(function(){
                 cajaResena.empty();
             }
 
+            //Agregar comentario 
             cajaResena.append(nuevoComentario);
         });
     }
 });
-
+    //Borrar comentario
     $(document).on('click', '.btn-borrar-comentario', function(){
     let boton = $(this);
     let id_comentario = boton.data("id");
@@ -67,7 +67,7 @@ $(document).ready(function(){
     }
 });
 
-
+    //Editar comentario
 $(document).on('click', '.texto-comentario.es-editable', function() {
     let boton = $(this);
     let id_comentario = boton.data('id');

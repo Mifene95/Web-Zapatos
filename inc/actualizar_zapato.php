@@ -2,7 +2,7 @@
 session_start();
 require 'db.php';
 
-// 1. Solo admin puede acceder
+// Comprobar admin 
 if ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'administrador') {
     die("Acceso denegado. No tienes permisos de administrador.");
 }
@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $nuevoTitulo = $_POST['titulo_zapato'];
 
     try {
-        // 2. Obtener los datos actuales 
+
         $stmt = $pdo->prepare("SELECT filename FROM products WHERE id = ?");
         $stmt->execute([$id]);
         $producto = $stmt->fetch();
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             die("Error: El producto no existe.");
         }
 
-        // 3. ¿Ha subido una imagen nueva?
+        // Comprobar si cambio de foto
         if (!empty($_FILES['nueva_foto']['name'])) {
 
             // Validar tipo de archivo
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $rutaFinal = "../uploads/" . $nombreArchivo;
 
             if (move_uploaded_file($_FILES["nueva_foto"]["tmp_name"], $rutaFinal)) {
-                // Borrar la foto vieja del servidor para ahorrar espacio
+                // Borrar la foto vieja 
                 $fotoVieja = "../uploads/" . $producto['filename'];
                 if (file_exists($fotoVieja)) {
                     unlink($fotoVieja);
@@ -46,12 +46,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $pdo->prepare($sql)->execute([$nuevoTitulo, $nombreArchivo, $id]);
             }
         } else {
-            // 4. Si NO hay foto nueva, solo actualizar el título
+            // Si ni hay foto
             $sql = "UPDATE products SET titulo = ? WHERE id = ?";
             $pdo->prepare($sql)->execute([$nuevoTitulo, $id]);
         }
 
-        // 5. Éxito: Volver al catálogo
         header("Location: ../pages/catalogo.php");
         exit();
     } catch (PDOException $e) {

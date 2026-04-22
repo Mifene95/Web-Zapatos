@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
         exit;
     }
 
-    // BLOQUE PARA PUNTOS (ESTRELLAS)
+    // Puntos = estrellas
     if (isset($_POST['puntos'])) {
         $puntos = $_POST['puntos'];
         $stmt = $pdo->prepare("UPDATE products SET estrellas = ? WHERE id = ?");

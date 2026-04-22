@@ -6,7 +6,7 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-// 1. Verificación
+// Comprobamos usuario
 if (!isset($_SESSION['rol']) || !isset($_SESSION['user_id'])) {
     echo "error_sesion";
     exit;
@@ -15,13 +15,13 @@ if (!isset($_SESSION['rol']) || !isset($_SESSION['user_id'])) {
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
 
-    // 2. Buscamos dueño
+    // Buscamos dueño
     $stmt = $pdo->prepare("SELECT id_usuario FROM comentarios WHERE id = ?");
     $stmt->execute([$id]);
     $comentario = $stmt->fetch(); // Usamos fetch para un solo registro
 
     if ($comentario) {
-        // 3. Comprobar permisos
+        // Comprobar permisos
         $esAdmin = ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador');
         $esDueño = ($_SESSION['user_id'] == $comentario['id_usuario']);
 
@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
             $delete->execute([$id]);
             echo "borrado_ok";
         } else {
-            echo "error_permiso"; // No eres el dueño ni admin
+            echo "error_permiso";
         }
     } else {
         echo "error_no_existe";
