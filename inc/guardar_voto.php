@@ -18,11 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_SESSION['user_id'])) {
         $texto = $_POST['comentario'];
 
         // INSERT
-        $sql = "INSERT INTO comentarios (id_zapato, id_usuario, nombre_usuario, comentario_texto) 
-                VALUES (?, ?, ?, ?)";
+        $sql = "INSERT INTO comentarios (id_zapato, id_usuario, comentario_texto) 
+                VALUES (?, ?, ?)";
 
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([$id_zapato, $id_usuario, $nombre, $texto]);
+        $stmt->execute([$id_zapato, $id_usuario, $texto]);
 
         //Actualizar el boton para borrar sin recargar
         $id_nuevo = $pdo->lastInsertId();

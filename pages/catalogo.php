@@ -37,11 +37,15 @@ if (!isset($_SESSION['rol'])) {
         <span class="span-bienvenida">
             Bienvenido,
             <div class="user-dropdown" style="display: inline-block; position: relative;">
-                <strong id="user-name-click" style="cursor: pointer; text-decoration: underline;">
-                    <?php echo htmlspecialchars($_SESSION['nombre']); ?> ▼
+                <strong id="user-name-click" class="user-trigger">
+                    <span class="nombre-usuario"><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
+
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon-chevron">
+                        <path d="m6 9 6 6 6-6"></path>
+                    </svg>
                 </strong>
                 <div id="dropdown-menu" class="dropdown-content">
-                    <a href="#" class="btn-perfil" data-tipo="nombre">Cambiar Nombre Usuario</a>
+                    <a href="#" class="btn-perfil" data-tipo="nombre">Cambiar Nombre</a>
                     <a href="#" class="btn-perfil" data-tipo="email">Cambiar Correo</a>
                     <a href="#" class="btn-perfil" data-tipo="pass">Cambiar Password</a>
                 </div>
@@ -107,7 +111,12 @@ if (!isset($_SESSION['rol'])) {
                 // RESEÑAS
                 echo "<div class='resena-box' style='background: #f9f9f9; padding: 10px; border-radius: 5px; margin-top: 10px;'>";
 
-                $stmt_com = $pdo->prepare("SELECT * FROM comentarios WHERE id_zapato = ? ORDER BY fecha DESC");
+                $stmt_com = $pdo->prepare("
+                SELECT *, 
+                (SELECT username FROM users WHERE users.id = comentarios.id_usuario) AS username 
+                FROM comentarios 
+                WHERE id_zapato = ? 
+                ");
                 $stmt_com->execute([$row['id']]);
                 $comentarios = $stmt_com->fetchAll();
 
@@ -125,7 +134,7 @@ if (!isset($_SESSION['rol'])) {
                         }
                         //Comprobar si puede editar
                         $claseEditable = ($esAdmin || $esDueño) ? 'es-editable' : '';
-                        echo "<strong>" . htmlspecialchars($com['nombre_usuario']) . ":</strong> ";
+                        echo "<strong>" . htmlspecialchars($com['username']) . ":</strong> ";
                         echo "<span class='texto-comentario $claseEditable' data-id='{$com['id']}'>"
                             . htmlspecialchars($com['comentario_texto']) .
                             "</span>";
