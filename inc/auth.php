@@ -13,15 +13,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && $pass === $user['password']) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['nombre']  = $user['username'];
-        $_SESSION['rol']     = $user['role']; 
+        $_SESSION['rol']     = $user['role'];
 
         header("Location: ../pages/catalogo.php");
         exit();
     } else {
-        echo "Correo o contraseña incorrectos. <a href='../index.php'>Volver</a>";
+        echo "<script>alert('Correo o contraseña incorrectos.');
+        window.location.href = '../index.php';
+        </script>";
     }
 } else {
     header("Location: ../index.php");
     exit();
 }
-?>

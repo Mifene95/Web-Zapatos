@@ -2,7 +2,7 @@
 $host = 'localhost';
 $db   = 'Web-Zapatos';
 $user = 'root';
-$pass = ''; 
+$pass = '';
 
 try {
     $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
