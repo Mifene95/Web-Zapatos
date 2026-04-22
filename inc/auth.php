@@ -13,7 +13,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if ($user && $pass === $user['password']) {
         $_SESSION['user_id'] = $user['id'];
         $_SESSION['nombre']  = $user['username'];
-        $_SESSION['rol']     = $user['role'];
+
+        if ($user['role_id'] == '1') {
+            $_SESSION['rol'] = "admin";
+        } else {
+            $_SESSION['rol'] = "user";
+        }
 
         header("Location: ../pages/catalogo.php");
         exit();

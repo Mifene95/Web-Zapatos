@@ -27,7 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Validar tipo de archivo
             $permitidos = ['image/jpeg', 'image/png', 'image/gif'];
             if (!in_array($_FILES['nueva_foto']['type'], $permitidos)) {
+                //MOSTRAR CODIGO ERROR/CONFIRMACION
                 die("Error: Solo se permiten imágenes JPG, PNG o GIF.");
+                //EXIT CON ARRAY 
             }
 
             // Generar nuevo nombre y mover archivo
@@ -46,7 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 $pdo->prepare($sql)->execute([$nuevoTitulo, $nombreArchivo, $id]);
             }
         } else {
-            // Si ni hay foto
+            // Si nO hay foto
             $sql = "UPDATE products SET titulo = ? WHERE id = ?";
             $pdo->prepare($sql)->execute([$nuevoTitulo, $id]);
         }
