@@ -29,7 +29,7 @@ if (!$producto) {
 
     <div style="margin-bottom: 15px;">
         <p class="img-titulo">Imagen actual:</p>
-        <img src="../uploads/<?php echo $producto['filename']; ?>" width="150" style="border: 1px solid #ccc; padding: 5px;">
+        <img src="../uploads/<?php echo $producto['filename']; ?>" width="150">
     </div>
 
     <div style="margin-bottom: 15px;">

@@ -207,7 +207,7 @@ header {
 
 /* LOGIN */
 .login-container {
-    width: 480px;
+    width: 650px;
     padding: 50px 40px;
     margin: 100px auto;
     border-radius: 20px;
@@ -276,17 +276,16 @@ header {
 }
 
 
-/* FONDO DE LA PÁGINA (sin tocar HTML) */
+/* FONDO DE LA PAGINA  */
 body:has(.editar-admin) {
     min-height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-
     background: linear-gradient(135deg, #6c5ce7, #00cec9);
 }
 
-/* FORMULARIO (TU MISMO HTML) */
+/* FORMULARIO ADMIN */
 .editar-admin {
     width: 550px;
     padding: 40px;
@@ -300,7 +299,7 @@ body:has(.editar-admin) {
     text-align: center;
 }
 
-/* INPUTS INLINE (los que tienes en style="") */
+/* INPUTS INLINE */
 .editar-admin input[type="text"],
 .editar-admin input[type="file"] {
     width: 100%;
@@ -312,36 +311,35 @@ body:has(.editar-admin) {
     border: 1px solid #ddd;
     border-radius: 10px;
 
-    font-size: 14px;
+    font-size: 18px;
 }
 
-/* IMAGEN ACTUAL (sobrescribe inline) */
+/* IMAGEN ACTUAL */
 .editar-admin img {
     width: 100%;
     max-height: 220px;
     object-fit: cover;
-
     border-radius: 12px;
     border: 2px solid #6c5ce7;
-
     margin: 10px 0 20px 0;
 }
 
 /* LABELS */
 .editar-admin label {
+    font-size: 25px;
     display: block;
     text-align: left;
-    font-weight: 500;
+    font-weight: bold;
 }
 
 /* TEXTO AYUDA */
 .aviso {
-    font-size: 12px;
+    font-size: 15px;
     color: #666;
     margin-top: 5px;
 }
 
-/* BOTON GUARDAR (sobrescribe inline style) */
+/* BOTON GUARDAR */
 .editar-admin button {
     width: 100%;
     padding: 14px;
@@ -380,4 +378,9 @@ body:has(.editar-admin) {
 
 .editar-admin a:hover {
     opacity: 0.8;
+}
+
+.texto-comentario.es-editable:hover {
+    text-decoration: underline;
+    font-style: italic;
 }
