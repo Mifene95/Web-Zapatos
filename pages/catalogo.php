@@ -39,15 +39,56 @@ if (!isset($_SESSION['rol'])) {
             <div class="user-dropdown" style="display: inline-block; position: relative;">
                 <strong id="user-name-click" class="user-trigger">
                     <span class="nombre-usuario"><?php echo htmlspecialchars($_SESSION['nombre']); ?></span>
-
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="icon-chevron">
                         <path d="m6 9 6 6 6-6"></path>
                     </svg>
                 </strong>
+
                 <div id="dropdown-menu" class="dropdown-content">
-                    <a href="#" class="btn-perfil" data-tipo="nombre">Cambiar Nombre</a>
-                    <a href="#" class="btn-perfil" data-tipo="email">Cambiar Correo</a>
-                    <a href="#" class="btn-perfil" data-tipo="pass">Cambiar Password</a>
+                    <a href="#" class="btn-perfil" data-tipo="nombre">
+                        <svg style="margin-right:10px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                        Cambiar Nombre
+                    </a>
+
+                    <a href="#" class="btn-perfil" data-tipo="email">
+                        <svg style="margin-right:10px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                            <polyline points="22,6 12,13 2,6"></polyline>
+                        </svg>
+                        Cambiar Correo
+                    </a>
+
+                    <a href="#" class="btn-perfil" data-tipo="pass">
+                        <svg style="margin-right:10px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                            <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+                        </svg>
+                        Cambiar Password
+                    </a>
+
+                    <?php if (isset($_SESSION['rol']) && ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador')): ?>
+                        <a href="../pages/panel_admin.php">
+                            <svg style="margin-right:10px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                                <circle cx="9" cy="7" r="4"></circle>
+                                <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                            </svg>
+                            Gestionar Usuarios
+                        </a>
+                    <?php endif; ?>
+
+                    <a href="../inc/logout.php" style="color: #d63031; border-top: 1px solid #f1f2f6;">
+                        <svg style="margin-right:10px" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+                            <polyline points="16 17 21 12 16 7"></polyline>
+                            <line x1="21" y1="12" x2="9" y2="12"></line>
+                        </svg>
+                        Cerrar Sesión
+                    </a>
                 </div>
             </div>
         </span>
