@@ -20,20 +20,19 @@ if (!isset($_SESSION['rol'])) {
 
 <body>
     <header>
-        <span>Bienvenido, <strong><?php echo htmlspecialchars($_SESSION['nombre']); ?></strong></span>
+        <span class="span-bienvenida">Bienvenido, <strong><?php echo htmlspecialchars($_SESSION['nombre']); ?></strong></span>
         <a href="../inc/logout.php" class="btn-logout">Cerrar Sesión</a>
     </header>
 
     <div class="container">
         <div class="upload-section">
-            <h3>Subir nuevo zapato</h3>
+            <h2 style="margin-bottom: 10px;">Subir nuevo zapato</h2>
             <form action="../upload.php" method="POST" enctype="multipart/form-data">
                 <input type="text" name="titulo_zapato" placeholder="Título del zapato" required>
                 <input type="file" name="foto_zapato" required>
                 <button type="submit" class="btn-upload">Publicar Zapato</button>
             </form>
         </div>
-
         <h2 class="titulo">Nuestros Zapatos</h2>
 
         <div class="galeria">

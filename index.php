@@ -9,8 +9,8 @@
 <body class="login-page">
     <div class="login-container">
 
-        <h2>Bienvenido 👋</h2>
-        <p style="margin-bottom:20px; color:#636e72;">
+        <h1>Bienvenido 👋</h1>
+        <p style="margin-bottom:25px; color:#636e72;">
             Accede a tu cuenta para continuar
         </p>
         <form class="inputs-form" action="inc/auth.php" method="POST">

@@ -39,6 +39,10 @@ header {
     box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
+.span-bienvenida{
+    font-size: 20px;
+}
+
 .btn-logout {
     background: rgba(255,255,255,0.2);
     padding: 8px 15px;
@@ -46,6 +50,7 @@ header {
     color: white;
     text-decoration: none;
     transition: 0.3s;
+    font-size: 20px;
 }
 
 .btn-logout:hover {
@@ -59,6 +64,8 @@ header {
     padding: 0 20px;
 }
 
+
+
 /* TITULO */
 .titulo {
     font-size: 30px;
@@ -66,7 +73,7 @@ header {
     margin-bottom: 25px;
 }
 
-/* SUBIR */
+/* FORM SUBIR FOTO */
 .upload-section {
     background: var(--color-card);
     padding: 25px;
@@ -81,6 +88,7 @@ header {
     margin-bottom: 10px;
     border: 1px solid #ddd;
     border-radius: 8px;
+    font-size: 20px;
 }
 
 /* BOTON */
@@ -94,6 +102,7 @@ header {
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-size: 15px;
 }
 
 .btn-upload:hover {
@@ -189,6 +198,7 @@ header {
 
 .comentario-individual {
     margin-bottom: 5px;
+    font-size: 17px;
 }
 
 /* BOTON COMENTAR */
@@ -199,6 +209,7 @@ header {
     background: linear-gradient(135deg, #a29bfe, #74b9ff);
     color: white;
     cursor: pointer;
+    font-size: 15px;
 }
 
 .btn-comentar:hover {
@@ -217,9 +228,8 @@ header {
     text-align: center;
 }
 
-.login-container h2 {
-    font-size: 28px;
-    margin-bottom: 30px;
+.login-container h1 {
+    margin-bottom: 20px;
     color: #2d3436;
 }
 
@@ -229,7 +239,7 @@ header {
     margin-bottom: 20px;
     border-radius: 10px;
     border: 1px solid #ddd;
-    font-size: 14px;
+    font-size: 20px;
     transition: 0.3s;
 }
 
@@ -246,10 +256,11 @@ header {
     border-radius: 12px;
     background: linear-gradient(135deg, #6c5ce7, #00cec9);
     color: white;
-    font-size: 15px;
+    font-size: 20px;
     font-weight: bold;
     cursor: pointer;
     transition: all 0.3s ease;
+    margin-top: 10px;
 }
 
 .login-container button:hover {
@@ -289,13 +300,10 @@ body:has(.editar-admin) {
 .editar-admin {
     width: 550px;
     padding: 40px;
-
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(10px);
-
     border-radius: 20px;
     box-shadow: 0 25px 60px rgba(0,0,0,0.25);
-
     text-align: center;
 }
 
@@ -304,13 +312,10 @@ body:has(.editar-admin) {
 .editar-admin input[type="file"] {
     width: 100%;
     padding: 12px;
-
     margin-top: 8px;
     margin-bottom: 20px;
-
     border: 1px solid #ddd;
     border-radius: 10px;
-
     font-size: 18px;
 }
 
