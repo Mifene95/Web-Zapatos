@@ -2,14 +2,24 @@
 session_start();
 require '../inc/db.php';
 
+ini_set('display_errors', 1);
+error_reporting(E_ALL);
+
 // SEGURIDAD: Si no es admin, fuera.
 if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'administrador')) {
     header("Location: ../index.php");
     exit();
 }
 
-// Consulta para traer a todos los usuarios menos a ti mismo (opcional, para no auto-bloquearte)
-$stmt = $pdo->prepare("SELECT * FROM users WHERE id != ? ORDER BY id DESC");
+// --- PASO 1: LA CONSULTA CON SUBCONSULTA ---
+// Cambiamos el SELECT * por esto:
+$stmt = $pdo->prepare("
+    SELECT *, 
+    (SELECT nombre_rol FROM roles WHERE roles.id = users.role_id) AS nombre_rol 
+    FROM users 
+    WHERE id != ? 
+    ORDER BY id DESC
+");
 $stmt->execute([$_SESSION['user_id']]);
 $usuarios = $stmt->fetchAll();
 ?>
@@ -23,7 +33,6 @@ $usuarios = $stmt->fetchAll();
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="../js/scripts.js"></script>
-
 </head>
 
 <body>
@@ -57,7 +66,13 @@ $usuarios = $stmt->fetchAll();
                         <td>#<?php echo $u['id']; ?></td>
                         <td style="font-weight: bold;"><?php echo htmlspecialchars($u['username']); ?></td>
                         <td><?php echo htmlspecialchars($u['email']); ?></td>
-                        <td><span class="badge-rol"><?php echo strtoupper($u['rol']); ?></span></td>
+
+                        <td>
+                            <span class="badge-rol">
+                                <?php echo strtoupper($u['nombre_rol'] ?? 'Sin Rol'); ?>
+                            </span>
+                        </td>
+
                         <td>
                             <?php if ($u['estado'] == 1): ?>
                                 <span class="status-pill status-online"></span> Activo
