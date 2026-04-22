@@ -14,7 +14,7 @@ if (!isset($_SESSION['user_id'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $titulo = $_POST['titulo_zapato'];
 
-    // 3. Configurar carpeta
+    // 3. Crear si no existe
     $directorio = "uploads/";
     if (!is_dir($directorio)) {
         mkdir($directorio, 0777, true);

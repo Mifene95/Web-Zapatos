@@ -83,7 +83,8 @@ if (!isset($_SESSION['rol'])) {
 
                 if (count($comentarios) > 0) {
                     foreach ($comentarios as $com) {
-                        echo "<div class='comentario-individual' style='border-bottom: 1px solid #eee; margin-bottom: 5px;'>";
+
+                        echo "<div class='comentario-individual' style='border-bottom: 1px solid #eee; margin-bottom: 5px'>";
 
                         //Comprobamos si es admin o dueño para mostrar boton borrar
                         $esAdmin = ($_SESSION['rol'] === 'admin' || $_SESSION['rol'] === 'administrador');
