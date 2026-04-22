@@ -672,3 +672,14 @@ body:has(.editar-admin) {
     color: white;
 }
     
+
+
+.status-pill { 
+    display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: 5px; 
+}
+.status-online {
+    background: #2ecc71; 
+    } 
+.status-offline { 
+    background: #e74c3c; 
+} 

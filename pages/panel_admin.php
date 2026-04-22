@@ -22,6 +22,7 @@ $usuarios = $stmt->fetchAll();
     <title>Panel de Gestión de Usuarios</title>
     <link rel="stylesheet" href="../css/styles.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="../js/scripts.js"></script>
 
 </head>
 
@@ -75,16 +76,6 @@ $usuarios = $stmt->fetchAll();
         </table>
     </div>
 
-    <script>
-        // Aquí irán las funciones AJAX para borrar, bloquear y editar usuarios
-        $(document).ready(function() {
-            $('.btn-eliminar-user').click(function() {
-                if (confirm('¿Estás SEGURO de eliminar a este usuario? Se borrarán sus posts y comentarios.')) {
-                    // Lógica AJAX para borrar
-                }
-            });
-        });
-    </script>
 </body>
 
 </html>

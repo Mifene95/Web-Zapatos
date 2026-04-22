@@ -153,4 +153,77 @@ $('#btn-guardar-perfil').click(function(){
     });
 });
 
+
+
+$(document).ready(function() {
+    // --- 1. FUNCIÓN EDITAR ---
+    $('.btn-editar-user').click(function() {
+        // Obtenemos el ID de la fila donde se hizo clic
+        const idUsuario = $(this).closest('tr').data('id');
+        
+        // Pedimos los nuevos datos (si se dejan vacíos, el PHP no los cambiará)
+        const nuevoNombre = prompt("Nuevo nombre (deja vacío para no cambiar):");
+        const nuevoEmail = prompt("Nuevo correo (deja vacío para no cambiar):");
+        const nuevaPass = prompt("Nueva contraseña (deja vacío para no cambiar):");
+
+        // Si el admin cancela todos los prompts, no hacemos nada
+        if (nuevoNombre === null && nuevoEmail === null && nuevaPass === null) return;
+
+        $.ajax({
+            url: '../inc/acciones_admin.php',
+            method: 'POST',
+            data: {
+                accion: 'editar_completo',
+                id: idUsuario,
+                nombre: nuevoNombre,
+                email: nuevoEmail,
+                pass: nuevaPass
+            },
+            success: function(response) {
+                if (response.trim() === 'ok') {
+                    alert("✅ Usuario actualizado correctamente");
+                    location.reload(); // Recargamos para ver los cambios en la tabla
+                } else if (response.trim() === 'sin_cambios') {
+                    alert("ℹ️ No se realizaron cambios.");
+                } else {
+                    alert("❌ Error al actualizar: " + response);
+                }
+            }
+        });
+    });
+
+    // --- 2. FUNCIÓN BLOQUEAR/ACTIVAR ---
+    $('.btn-bloquear').click(function() {
+        const idUsuario = $(this).closest('tr').data('id');
+        const boton = $(this);
+
+        $.post('../inc/acciones_admin.php', { accion: 'bloquear', id: idUsuario }, function(response) {
+            if (response.trim() === 'ok') {
+                // En lugar de alert, recargamos para que cambie el color del circulito de estado
+                location.reload();
+            }
+        });
+    });
+
+    // --- 3. FUNCIÓN ELIMINAR ---
+    $('.btn-eliminar-user').click(function() {
+        const idUsuario = $(this).closest('tr').data('id');
+        const fila = $(this).closest('tr');
+
+        if (confirm("⚠️ ¿Estás SEGURO de eliminar este usuario? Esta acción no se puede deshacer.")) {
+            $.post('../inc/acciones_admin.php', { accion: 'eliminar', id: idUsuario }, function(response) {
+                if (response.trim() === 'ok') {
+                    // Animación suave para quitar la fila de la tabla
+                    fila.fadeOut(400, function() {
+                        $(this).remove();
+                    });
+                } else {
+                    alert("Error al eliminar: " + response);
+                }
+            });
+        }
+    });
+
+});
+
 });
