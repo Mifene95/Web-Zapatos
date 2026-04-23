@@ -185,7 +185,7 @@ $(document).ready(function() {
         if (confirm("⚠️ ¿Estás SEGURO de eliminar este usuario? Esta acción no se puede deshacer.")) {
             $.post('../inc/acciones_admin.php', { accion: 'eliminar', id: idUsuario }, function(response) {
                 if (response.trim() === 'ok') {
-                    // Animación suave para quitar la fila de la tabla
+                    
                     fila.fadeOut(400, function() {
                         $(this).remove();
                     });
@@ -200,14 +200,19 @@ $(document).ready(function() {
 
 //FUNCION CREAR NUEVO USUARIO
 $('.btn-upload').click(function() {
+    $('#modalCrearUsuario').fadeIn(200);
 
-    alert("click");
 });
 
 
 //CANCELAR MODAL EDICION
-$('#btn-cancelar-edit').click(function() {
+$('#btn-cancelar-editar').click(function() {
     $('#modalEditar').fadeOut(200);
+});
+
+//CANCELAR MODAL CREACION
+$('#btn-cancelar-crear').click(function() {
+    $('#modalCrearUsuario').fadeOut(200);
 });
 
 //GUARDAR MODO EDICION
@@ -217,7 +222,12 @@ $('#btn-guardar-cambios').click(function() {
     let nombre = $('#edit-nombre').val();
     let email = $('#edit-email').val();
     let password = $('#edit-pass').val();
-    console.log(nombre, email, password);
+    let rol = $('input[name="nuevo-rol"]:checked').val();
+
+    if (email.length > 0 && !email.includes("@")) {
+    alert("Introduce un email válido");
+    return; 
+}
     
     $.ajax ({
         url: '../inc/acciones_admin.php',
@@ -227,27 +237,83 @@ $('#btn-guardar-cambios').click(function() {
             id: id,
             nombre: nombre,
             email: email,
-            password: password
+            password: password,
+            rol: rol
         },
-        success: function(respuesta){
-            let r = respuesta.trim();
-
-            if(r === 'ok'){
-                alert("Usuario editado");
+        dataType: 'json', 
+        success: function(respuesta) {
+            
+            if(respuesta.success) {
+                alert(respuesta.message);
                 location.reload();
-            }else{
-                alert("Error en el servidor" + r);
+            } else {
+                alert("Error: " + respuesta.message);
             }
         },
-        error: function(xhr, status, error){
-            console.error("Detalles error: " + error);
-            alert("Error de conexión: No se pudo contactar con el servidor.");
+        error: function(xhr) {
+            try {
+                let errorDetalle = JSON.parse(xhr.responseText);
+                alert("Error: " + errorDetalle.message + (errorDetalle.error ? " (" + errorDetalle.error + ")" : ""));
+            } catch (e) {
+                alert("Error crítico en el servidor. Revisa la consola.");
+                console.log(xhr.responseText);
+            }
         }
-
     });
+});
+
+//GUARDAR MODO CREACION USUARIO
+
+$('#btn-guardar-usuario').click(function(){
+    let nombre = $('#nuevo-nombre').val();
+    let correo = $('#nuevo-email').val();
+    let password = $('#nueva-pass').val();
+    let rol = $('input[name="nuevo-rol"]:checked').val();
+
+    if (nombre === "" || correo === "" || password === "" || !rol) {
+        alert("¡Error! Todos los campos son obligatorios para crear un usuario.");
+        return; 
+    }
+
+    if (correo.length > 0 && !correo.includes("@")) {
+    alert("Introduce un email válido");
+    return; 
+}
+
+    $.ajax({
+        url: '../inc/acciones_admin.php',
+        method: 'POST',
+        data: {
+        accion: 'crear',
+        nombre: nombre,
+        correo: correo,
+        password: password,
+        rol: rol
+        },
+        dataType: 'json',
+        success: function(respuesta){
+
+            if (respuesta.success){
+                alert(respuesta.mensaje);
+                location.reload();
+            }else{
+                alert("Error " + respuesta.mensaje)
+            }
+        },
+        error: function(xhr) {
+            try {
+                let errorDetalle = JSON.parse(xhr.responseText);
+                alert("Error: " + errorDetalle.message + (errorDetalle.error ? " (" + errorDetalle.error + ")" : ""));
+            } catch (e) {
+                alert("Error crítico en el servidor. Revisa la consola.");
+                console.log(xhr.responseText);
+            }
+        }
+    }
+    )
+});
 
 });
 
 
 
-});

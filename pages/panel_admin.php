@@ -48,12 +48,53 @@ $usuarios = $stmt->fetchAll();
             <input type="email" id="edit-email" class="modal-input" placeholder="Nuevo email">
 
             <label class="modal-label" style="margin-bottom: 5px;">Nueva Contraseña:</label>
-            <input type="password" id="edit-pass" class="modal-input" placeholder="Dejar vacío para no cambiar">
+            <input type="password" id="edit-pass" class="modal-input" placeholder="Nueva Contraseña">
+
+            <div style="display: flex; gap: 20px; margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                <label style="cursor:pointer;">
+                    <input type="radio" name="nuevo-rol" id="admin" value="1" checked> Administrador
+                </label>
+                <label style="cursor:pointer;">
+                    <input type="radio" name="nuevo-rol" id="user" value="2"> Usuario Estándar
+                </label>
+            </div>
         </div>
 
         <div class="modal-footer">
-            <button id="btn-cancelar-edit" class="btn-secundario" style="flex:1;">Cancelar</button>
+            <button id="btn-cancelar-editar" class="btn-secundario" style="flex:1;">Cancelar</button>
             <button id="btn-guardar-cambios" class="btn-primario" style="flex:1;">Guardar</button>
+        </div>
+    </div>
+</div>
+
+<div id="modalCrearUsuario" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="modal-titulo">Creación de Usuario</h3>
+        <div>
+            <label class="modal-label" style="margin-bottom: 5px;">Nombre de Usuario:</label>
+            <input type="text" id="nuevo-nombre" class="modal-input" placeholder="Nuevo nombre">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Correo Electrónico:</label>
+            <input type="email" id="nuevo-email" class="modal-input" placeholder="Nuevo email">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Nueva Contraseña:</label>
+            <input type="password" id="nueva-pass" class="modal-input" placeholder="Nueva Contraseña">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Selecciona Rol:</label>
+            <div style="display: flex; gap: 20px; margin-bottom: 15px; padding: 10px; background: #f9f9f9; border-radius: 5px;">
+                <label style="cursor:pointer;">
+                    <input type="radio" name="nuevo-rol" id="admin" value="1" checked> Administrador
+                </label>
+                <label style="cursor:pointer;">
+                    <input type="radio" name="nuevo-rol" id="user" value="2"> Usuario Estándar
+                </label>
+            </div>
+        </div>
+
+
+        <div class="modal-footer">
+            <button id="btn-cancelar-crear" class="btn-secundario" style="flex:1;">Cancelar</button>
+            <button id="btn-guardar-usuario" class="btn-primario" style="flex:1;">Guardar</button>
         </div>
     </div>
 </div>

@@ -10,49 +10,65 @@ if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'
 $accion = $_POST['accion'] ?? '';
 $id_usuario = $_POST['id'] ?? null;
 
-if (!$id_usuario) die("ID no válido");
 
 switch ($accion) {
-    case 'editar_completo':
-        // Recogemos y limpiamos los datos
-        $nombre = trim($_POST['nombre'] ?? '');
-        $email = trim($_POST['email'] ?? '');
-        $pass = trim($_POST['pass'] ?? '');
+    case 'editar-completo':
+        $id = $_POST['id'];
+        $nombre = $_POST['nombre'];
+        $email = $_POST['email'];
+        $pass = $_POST['password'];
+        $rol = $_POST['rol'];
 
+        $sql = 'UPDATE users SET ';
         $campos = [];
-        $valores = [];
+        $params = [];
 
-        // Solo añadimos a la consulta si el campo NO está vacío
         if (!empty($nombre)) {
             $campos[] = "username = ?";
-            $valores[] = $nombre;
+            $params[] = $nombre;
         }
+
         if (!empty($email)) {
             $campos[] = "email = ?";
-            $valores[] = $email;
+            $params[] = $email;
         }
+
         if (!empty($pass)) {
-            $campos[] = "password = ?"; // Texto plano como pediste
-            $valores[] = $pass;
+            $campos[] = "password = ?";
+            $params[] = $pass;
         }
 
-        // Si el admin no escribió nada en ningún campo, avisamos
-        if (empty($campos)) {
-            echo "sin_cambios";
-            break;
+        if (!empty($rol)) {
+            $campos[] = "role_id = ?";
+            $params[] = $rol;
         }
 
-        // Añadimos el ID al final para el WHERE
-        $valores[] = $id_usuario;
+        if (count($campos) === 0) {
+            echo json_encode(['success' => false, 'mensaje' => 'No has modificado ningún campo.']);
+            exit;
+        }
 
-        // Construimos la SQL dinámicamente
-        $sql = "UPDATE users SET " . implode(", ", $campos) . " WHERE id = ?";
+        $sql .= implode(", ", $campos);
+        $sql .= " WHERE id = ?";
+        $params[] = $id;
+
 
         $stmt = $pdo->prepare($sql);
-        if ($stmt->execute($valores)) {
-            echo "ok";
+        $resultado = $stmt->execute($params);
+
+        //COMPROBAR RESULTADO
+        if ($resultado) {
+            http_response_code(200);
+            echo json_encode([
+                'success' => true,
+                'message' => '¡Usuario actualizado!'
+            ]);
         } else {
-            echo "error";
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'message' => 'No se pudo actualizar'
+            ]);
         }
         break;
 
@@ -71,13 +87,25 @@ switch ($accion) {
         break;
 
     case 'crear':
-        // Por si decides usar el botón de agregar nuevo
         $n = $_POST['nombre'];
-        $e = $_POST['email'];
-        $p = $_POST['pass'];
+        $e = $_POST['correo'];
+        $p = $_POST['password'];
         $r = $_POST['rol'];
-        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, rol, estado) VALUES (?, ?, ?, ?, 1)");
-        $stmt->execute([$n, $e, $p, $r]);
-        echo "ok";
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)");
+        $resultado = $stmt->execute([$n, $e, $p, $r]);
+
+        if ($resultado) {
+            http_response_code(200);
+            echo json_encode([
+                'success' => true,
+                'mensaje' => '¡Usuario creado!'
+            ]);
+        } else {
+            http_response_code(400);
+            echo json_encode([
+                'success' => false,
+                'mensaje' => 'No se pudo crear el usuario'
+            ]);
+        }
         break;
 }
