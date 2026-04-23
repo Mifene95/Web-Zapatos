@@ -104,7 +104,6 @@ $usuarios = $stmt->fetchAll();
     <header>
         <a href="catalogo.php" style="color: white; text-decoration: none; font-weight: bold;">← Volver al Catálogo</a>
         <span class="span-bienvenida">Panel Administrativo</span>
-        <div></div>
         <a href="../inc/logout.php" class="btn-logout">Cerrar Sesión</a>
     </header>
 
@@ -147,9 +146,11 @@ $usuarios = $stmt->fetchAll();
                             <?php endif; ?>
                         </td>
                         <td>
-                            <button class="btn-accion btn-editar-user" title="Editar datos">✏️</button>
-                            <button class="btn-accion btn-bloquear" title="Bloquear/Desbloquear">🚫</button>
-                            <button class="btn-accion btn-eliminar-user" title="Eliminar definitivamente">🗑️</button>
+                            <div class="flex">
+                                <button class="btn-accion btn-editar-user" title="Editar datos">✏️</button>
+                                <button class="btn-accion btn-bloquear" title="Bloquear/Desbloquear">🚫</button>
+                                <button class="btn-accion btn-eliminar-user" title="Eliminar definitivamente">🗑️</button>
+                            </div>
                         </td>
                     </tr>
                 <?php endforeach; ?>

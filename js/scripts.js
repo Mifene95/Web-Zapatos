@@ -244,10 +244,10 @@ $('#btn-guardar-cambios').click(function() {
         success: function(respuesta) {
             
             if(respuesta.success) {
-                alert(respuesta.message);
+                alert(respuesta.mensaje);
                 location.reload();
             } else {
-                alert("Error: " + respuesta.message);
+                alert("Error: " + respuesta.mensaje);
             }
         },
         error: function(xhr) {
@@ -303,7 +303,7 @@ $('#btn-guardar-usuario').click(function(){
         error: function(xhr) {
             try {
                 let errorDetalle = JSON.parse(xhr.responseText);
-                alert("Error: " + errorDetalle.message + (errorDetalle.error ? " (" + errorDetalle.error + ")" : ""));
+                alert("Error: " + errorDetalle.mensaje + (errorDetalle.error ? " (" + errorDetalle.error + ")" : ""));
             } catch (e) {
                 alert("Error crítico en el servidor. Revisa la consola.");
                 console.log(xhr.responseText);

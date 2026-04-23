@@ -684,3 +684,8 @@ body:has(.editar-admin) {
 .status-offline { 
     background: #e74c3c; 
 } 
+
+.flex{
+    display: flex;
+    justify-content: center;
+}

@@ -2,6 +2,8 @@
 session_start();
 require 'db.php';
 
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'] !== 'administrador')) {
     die("Acceso denegado");
@@ -61,13 +63,13 @@ switch ($accion) {
             http_response_code(200);
             echo json_encode([
                 'success' => true,
-                'message' => '¡Usuario actualizado!'
+                'mensaje' => '¡Usuario actualizado!'
             ]);
         } else {
             http_response_code(400);
             echo json_encode([
                 'success' => false,
-                'message' => 'No se pudo actualizar'
+                'mensaje' => 'No se pudo actualizar'
             ]);
         }
         break;
