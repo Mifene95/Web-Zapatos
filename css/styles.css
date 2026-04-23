@@ -557,6 +557,7 @@ body:has(.editar-admin) {
     gap: 15px;
 }
 
+
 .btn-primario {
     flex: 1;
     padding: 14px;

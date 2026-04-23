@@ -11,8 +11,8 @@ if (!isset($_SESSION['rol']) || ($_SESSION['rol'] !== 'admin' && $_SESSION['rol'
     exit();
 }
 
-// --- PASO 1: LA CONSULTA CON SUBCONSULTA ---
-// Cambiamos el SELECT * por esto:
+// ---  CONSULTA CON SUBCONSULTA ---
+
 $stmt = $pdo->prepare("
     SELECT *, 
     (SELECT nombre_rol FROM roles WHERE roles.id = users.role_id) AS nombre_rol 
@@ -35,12 +35,36 @@ $usuarios = $stmt->fetchAll();
     <script src="../js/scripts.js"></script>
 </head>
 
+<div id="modalEditar" class="modal-overlay">
+    <div class="modal-content">
+        <h3 id="modal-titulo">Gestión de Usuario</h3>
+
+        <div class="modal-body" style="text-align: left;"> <input type="hidden" id="edit-id">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Nombre de Usuario:</label>
+            <input type="text" id="edit-nombre" class="modal-input" placeholder="Nuevo nombre">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Correo Electrónico:</label>
+            <input type="email" id="edit-email" class="modal-input" placeholder="Nuevo email">
+
+            <label class="modal-label" style="margin-bottom: 5px;">Nueva Contraseña:</label>
+            <input type="password" id="edit-pass" class="modal-input" placeholder="Dejar vacío para no cambiar">
+        </div>
+
+        <div class="modal-footer">
+            <button id="btn-cancelar-edit" class="btn-secundario" style="flex:1;">Cancelar</button>
+            <button id="btn-guardar-cambios" class="btn-primario" style="flex:1;">Guardar</button>
+        </div>
+    </div>
+</div>
+
 <body>
 
     <header>
         <a href="catalogo.php" style="color: white; text-decoration: none; font-weight: bold;">← Volver al Catálogo</a>
         <span class="span-bienvenida">Panel Administrativo</span>
         <div></div>
+        <a href="../inc/logout.php" class="btn-logout">Cerrar Sesión</a>
     </header>
 
     <div class="admin-container">
@@ -55,6 +79,7 @@ $usuarios = $stmt->fetchAll();
                     <th>ID</th>
                     <th>Usuario</th>
                     <th>Email</th>
+                    <th>Password</th>
                     <th>Rol</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -66,7 +91,7 @@ $usuarios = $stmt->fetchAll();
                         <td>#<?php echo $u['id']; ?></td>
                         <td style="font-weight: bold;"><?php echo htmlspecialchars($u['username']); ?></td>
                         <td><?php echo htmlspecialchars($u['email']); ?></td>
-
+                        <td><?php echo $u['password']; ?></td>
                         <td>
                             <span class="badge-rol">
                                 <?php echo strtoupper($u['nombre_rol'] ?? 'Sin Rol'); ?>
@@ -77,7 +102,7 @@ $usuarios = $stmt->fetchAll();
                             <?php if ($u['estado'] == 1): ?>
                                 <span class="status-pill status-online"></span> Activo
                             <?php else: ?>
-                                <span class="status-pill status-offline"></span> Bloqueado
+                                <span class="status-pill status-offline"></span> Inactivo
                             <?php endif; ?>
                         </td>
                         <td>

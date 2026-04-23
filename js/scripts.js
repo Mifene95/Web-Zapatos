@@ -156,40 +156,12 @@ $('#btn-guardar-perfil').click(function(){
 
 
 $(document).ready(function() {
-    // --- 1. FUNCIÓN EDITAR ---
+        //FUNCIÓN EDITAR
     $('.btn-editar-user').click(function() {
-        // Obtenemos el ID de la fila donde se hizo clic
+        //COJEMOS EL ID
         const idUsuario = $(this).closest('tr').data('id');
-        
-        // Pedimos los nuevos datos (si se dejan vacíos, el PHP no los cambiará)
-        const nuevoNombre = prompt("Nuevo nombre (deja vacío para no cambiar):");
-        const nuevoEmail = prompt("Nuevo correo (deja vacío para no cambiar):");
-        const nuevaPass = prompt("Nueva contraseña (deja vacío para no cambiar):");
-
-        // Si el admin cancela todos los prompts, no hacemos nada
-        if (nuevoNombre === null && nuevoEmail === null && nuevaPass === null) return;
-
-        $.ajax({
-            url: '../inc/acciones_admin.php',
-            method: 'POST',
-            data: {
-                accion: 'editar_completo',
-                id: idUsuario,
-                nombre: nuevoNombre,
-                email: nuevoEmail,
-                pass: nuevaPass
-            },
-            success: function(response) {
-                if (response.trim() === 'ok') {
-                    alert("✅ Usuario actualizado correctamente");
-                    location.reload(); // Recargamos para ver los cambios en la tabla
-                } else if (response.trim() === 'sin_cambios') {
-                    alert("ℹ️ No se realizaron cambios.");
-                } else {
-                    alert("❌ Error al actualizar: " + response);
-                }
-            }
-        });
+        $('#edit-id').val(idUsuario);
+        $('#modalEditar').fadeIn(200);
     });
 
     // --- 2. FUNCIÓN BLOQUEAR/ACTIVAR ---
@@ -225,5 +197,57 @@ $(document).ready(function() {
     });
 
 });
+
+//FUNCION CREAR NUEVO USUARIO
+$('.btn-upload').click(function() {
+
+    alert("click");
+});
+
+
+//CANCELAR MODAL EDICION
+$('#btn-cancelar-edit').click(function() {
+    $('#modalEditar').fadeOut(200);
+});
+
+//GUARDAR MODO EDICION
+
+$('#btn-guardar-cambios').click(function() {
+    let id = $('#edit-id').val();
+    let nombre = $('#edit-nombre').val();
+    let email = $('#edit-email').val();
+    let password = $('#edit-pass').val();
+    console.log(nombre, email, password);
+    
+    $.ajax ({
+        url: '../inc/acciones_admin.php',
+        method: 'POST',
+        data: {
+            accion: 'editar-completo',
+            id: id,
+            nombre: nombre,
+            email: email,
+            password: password
+        },
+        success: function(respuesta){
+            let r = respuesta.trim();
+
+            if(r === 'ok'){
+                alert("Usuario editado");
+                location.reload();
+            }else{
+                alert("Error en el servidor" + r);
+            }
+        },
+        error: function(xhr, status, error){
+            console.error("Detalles error: " + error);
+            alert("Error de conexión: No se pudo contactar con el servidor.");
+        }
+
+    });
+
+});
+
+
 
 });

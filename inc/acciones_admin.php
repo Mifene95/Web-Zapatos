@@ -76,7 +76,6 @@ switch ($accion) {
         $e = $_POST['email'];
         $p = $_POST['pass'];
         $r = $_POST['rol'];
-
         $stmt = $pdo->prepare("INSERT INTO users (username, email, password, rol, estado) VALUES (?, ?, ?, ?, 1)");
         $stmt->execute([$n, $e, $p, $r]);
         echo "ok";
