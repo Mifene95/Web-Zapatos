@@ -171,7 +171,6 @@ $(document).ready(function() {
 
         $.post('../inc/acciones_admin.php', { accion: 'bloquear', id: idUsuario }, function(response) {
             if (response.trim() === 'ok') {
-                // En lugar de alert, recargamos para que cambie el color del circulito de estado
                 location.reload();
             }
         });

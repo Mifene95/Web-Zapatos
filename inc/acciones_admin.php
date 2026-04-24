@@ -37,7 +37,7 @@ switch ($accion) {
 
         if (!empty($pass)) {
             $campos[] = "password = ?";
-            $params[] = $pass;
+            $params[] = password_hash($pass, PASSWORD_DEFAULT);
         }
 
         if (!empty($rol)) {
@@ -93,7 +93,11 @@ switch ($accion) {
         $e = $_POST['correo'];
         $p = $_POST['password'];
         $r = $_POST['rol'];
-        $stmt = $pdo->prepare("INSERT INTO users (username, email, password, role_id) VALUES (?, ?, ?, ?)");
+
+        //cifrado password
+        $passwordCifrada = password_hash($p, PASSWORD_DEFAULT);
+
+        $stmt = $pdo->prepare("INSERT INTO users (username, email, passwordCifrada, role_id) VALUES (?, ?, ?, ?)");
         $resultado = $stmt->execute([$n, $e, $p, $r]);
 
         if ($resultado) {

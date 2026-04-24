@@ -11,7 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt->execute([$email]);
     $user = $stmt->fetch();
 
-    if ($user && $pass === $user['password']) {
+    if ($user && password_verify($pass, $user['password'])) {
         if ($user["estado"] === 0) {
             echo "<script>
                 alert('Tu cuenta está desactivada. Contacta con el administrador.');

@@ -119,7 +119,6 @@ $usuarios = $stmt->fetchAll();
                     <th>ID</th>
                     <th>Usuario</th>
                     <th>Email</th>
-                    <th>Password</th>
                     <th>Rol</th>
                     <th>Estado</th>
                     <th>Acciones</th>
@@ -131,7 +130,6 @@ $usuarios = $stmt->fetchAll();
                         <td>#<?php echo $u['id']; ?></td>
                         <td style="font-weight: bold;"><?php echo htmlspecialchars($u['username']); ?></td>
                         <td><?php echo htmlspecialchars($u['email']); ?></td>
-                        <td><?php echo $u['password']; ?></td>
                         <td>
                             <span class="badge-rol">
                                 <?php echo strtoupper($u['nombre_rol'] ?? 'Sin Rol'); ?>
